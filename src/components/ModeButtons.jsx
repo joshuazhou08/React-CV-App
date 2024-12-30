@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import '../styles/ModeButton.css'
 function ModeButton( { text, onChange, focused } ) {
-
     if (focused) {
         return (
             <button onClick= {() => onChange()} className = "focused"> 

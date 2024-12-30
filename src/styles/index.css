@@ -1,0 +1,18 @@
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+h1 {
+    margin: 20px;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(0.9);
+}

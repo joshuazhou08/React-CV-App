@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import TextInput from "./UserInput.jsx";
 import "../styles/Forms.css";
-
+import { RemoveJobButton } from "./Buttons.jsx";
 function PersonalForm({ person, onChange }) {
   return (
     <div className="wrapper">
@@ -37,7 +37,6 @@ function PersonalForm({ person, onChange }) {
           label="LinkedIn Profile:"
           onChange={onChange}
         />
-        <button className="submit-button"> Submit </button>
       </div>
     </div>
   );
@@ -63,19 +62,109 @@ function EducationForm({ person, onChange }) {
         <TextInput
           person={person}
           onChange={onChange}
-          className="start date"
+          className="ed-start-date"
           label="Start Date:"
         />
         <TextInput
           person={person}
           onChange={onChange}
-          className="end date"
+          className="ed-end-date"
           label="End Date:"
         />
-        <button className="submit-button"> Submit </button>
+        <TextInput
+          person={person}
+          onChange={onChange}
+          className="skills"
+          label="Skills:"
+        />
       </div>
     </div>
   );
 }
+function JobTextInput({ person, onChange, id, className, label }) {
+  return (
+    <div className={className}>
+      <label>
+        {label}{" "}
+        <input
+          value={person.jobs[id][className]}
+          type="text"
+          onChange={(e) => {
+            person.jobs[id] = {
+              ...person.jobs[id],
+              [className]: e.target.value,
+            };
+            onChange({
+              ...person,
+            });
+          }}
+        />
+      </label>
+    </div>
+  );
+}
 
-export { PersonalForm, EducationForm };
+function JobTextBox({ person, onChange, id, className, label }) {
+  return (
+    <div className={className}>
+      <label>
+        {label}{" "}
+        <textarea
+          value={person.jobs[id][className]}
+          onChange={(e) =>
+            onChange({
+              ...person,
+              jobs: { ...person.jobs[id], [className]: e.target.value },
+            })
+          }
+        />
+      </label>
+    </div>
+  );
+}
+function ExperienceForm({ person, onChange, id }) {
+  return (
+    <>
+      <div className="form-wrapper">
+        <JobTextInput
+          person={person}
+          onChange={onChange}
+          className="job-title"
+          label="Job Title:"
+          id={id}
+        />
+        <JobTextInput
+          person={person}
+          onChange={onChange}
+          className="company"
+          label="Company:"
+          id={id}
+        />
+        <JobTextInput
+          person={person}
+          onChange={onChange}
+          className="job-start-date"
+          label="Start Date:"
+          id={id}
+        />
+        <JobTextInput
+          person={person}
+          onChange={onChange}
+          className="job-end-date"
+          label="End Date:"
+          id={id}
+        />
+        <JobTextBox
+          person={person}
+          onChange={onChange}
+          className="description"
+          label="Description:"
+          id={id}
+        />
+      </div>
+      <RemoveJobButton person={person} onChange={onChange} id={id} />
+    </>
+  );
+}
+
+export { PersonalForm, EducationForm, ExperienceForm };
